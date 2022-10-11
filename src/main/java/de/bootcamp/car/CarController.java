@@ -1,9 +1,9 @@
 package de.bootcamp.car;
 
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Collection;
+import java.util.Optional;
 
 
 @RestController
@@ -32,8 +32,8 @@ public class CarController {
     }
 
     @GetMapping("{id}")
-    public ResponseEntity<Car> getCar(@PathVariable String id) {
-        return ResponseEntity.of(carService.getCar(id));
+    public Optional<Car> getCar(@PathVariable String id) {
+        return carService.getCar(id);
     }
 
 }
