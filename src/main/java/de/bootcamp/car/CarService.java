@@ -1,26 +1,26 @@
 package de.bootcamp.car;
 
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
+import java.util.*;
 
 public class CarService {
     private CarRepository carRepository = new CarRepository();
 
+    public CarService(CarRepository carRepository) {
+        this.carRepository = carRepository;
+    }
+
+    public Optional<Car> getCar(String id){
+        return carRepository.getCar(id);
+    }
+
+    public Collection<Car> getCars() {
+        return Collections.unmodifiableCollection(carRepository.getCars());
+    }
 
     public Car addCar(Car car) {
-        String id = UUID.randomUUID().toString();
-        if(car.getId() == null)car.setId(id);
-        carRepository.addCar(id, car);
+        carRepository.addCar(car);
         return car;
     }
 
-    public Map<String, Car> getCars() {
-        return carRepository.getCars();
-    }
-
-    public Set<String> getUUIDs() {
-        return carRepository.getCars().keySet();
-    }
 
 }

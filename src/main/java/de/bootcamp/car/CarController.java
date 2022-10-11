@@ -1,17 +1,21 @@
 package de.bootcamp.car;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
+import java.util.Collection;
 
 
 @RestController
-@RequestMapping("/car")
+@RequestMapping("/cars")
 public class CarController {
 
-    private CarService carService = new CarService();
+    private CarRepository carRepository = new CarRepository();
+    private CarService carService = new CarService(carRepository);
+
+//    public CarController(CarService carService) {
+//        this.carService = carService;
+//    }
 
 
     // http://localhost:8080/car
@@ -23,18 +27,13 @@ public class CarController {
 
 
     @GetMapping
-    public List<Car> getCars() {
-        return new ArrayList<>(carService.getCars().values());
-    }
-
-    @GetMapping("/uuid")
-    public Set<String> getUUIDs() {
-        return carService.getUUIDs();
+    public Collection<Car> getCars() {
+          return carService.getCars();
     }
 
     @GetMapping("{id}")
-    public Car getCar(@PathVariable String id) {
-        return carService.getCars().get(id);
+    public ResponseEntity<Car> getCar(@PathVariable String id) {
+        return ResponseEntity.of(carService.getCar(id));
     }
 
 }

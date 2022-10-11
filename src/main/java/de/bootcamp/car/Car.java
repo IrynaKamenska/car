@@ -2,60 +2,57 @@ package de.bootcamp.car;
 
 
 import java.util.Objects;
+import java.util.UUID;
 
 public class Car {
-    private String hersteller;
-    private int anzahlReifen;
-    private boolean tuevPlakete;
+    private final String id = UUID.randomUUID().toString();
+    private String manufacter;
+    private int amountOfTires;
+    private boolean tuev;
 
-    private String id;
 
-    public Car(String id, String hersteller, int anzahlReifen, boolean tuevPlakete) {
-        this.id = id;
-        this.hersteller = hersteller;
-        this.anzahlReifen = anzahlReifen;
-        this.tuevPlakete = tuevPlakete;
+
+    public Car(String manufacter, int amountOfTires, boolean tuev) {
+        this.manufacter = manufacter;
+        this.amountOfTires = amountOfTires;
+        this.tuev = tuev;
     }
 
-    public String getHersteller() {
-        return hersteller;
+    public String getManufacter() {
+        return manufacter;
     }
 
-    public void setHersteller(String hersteller) {
-        this.hersteller = hersteller;
+    public void setManufacter(String manufacter) {
+        this.manufacter = manufacter;
     }
 
-    public int getAnzahlReifen() {
-        return anzahlReifen;
+    public int getAmountOfTires() {
+        return amountOfTires;
     }
 
-    public void setAnzahlReifen(int anzahlReifen) {
-        this.anzahlReifen = anzahlReifen;
+    public void setAmountOfTires(int amountOfTires) {
+        this.amountOfTires = amountOfTires;
     }
 
-    public boolean isTuevPlakete() {
-        return tuevPlakete;
+    public boolean isTuev() {
+        return tuev;
     }
 
-    public void setTuevPlakete(boolean tuevPlakete) {
-        this.tuevPlakete = tuevPlakete;
+    public void setTuev(boolean tuev) {
+        this.tuev = tuev;
     }
 
     public String getId() {
         return id;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
 
     @Override
     public String toString() {
         return "Car{" +
-                "hersteller='" + hersteller + '\'' +
-                ", anzahlReifen=" + anzahlReifen +
-                ", tuevPlakete=" + tuevPlakete +
-                ", id=" + id +
+                "hersteller='" + manufacter + '\'' +
+                ", anzahlReifen=" + amountOfTires +
+                ", tuevPlakete=" + tuev +
                 '}';
     }
 
@@ -64,11 +61,11 @@ public class Car {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Car car = (Car) o;
-        return anzahlReifen == car.anzahlReifen && tuevPlakete == car.tuevPlakete && hersteller.equals(car.hersteller) && id.equals(car.id);
+        return amountOfTires == car.amountOfTires && tuev == car.tuev && manufacter.equals(car.manufacter) && id.equals(car.id);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(hersteller, anzahlReifen, tuevPlakete, id);
+        return Objects.hash(manufacter, amountOfTires, tuev, id);
     }
 }

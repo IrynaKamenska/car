@@ -3,17 +3,22 @@ package de.bootcamp.car;
 import java.util.*;
 
 public class CarRepository {
-    private Map<String, Car> cars = new HashMap<>();
+    private final Map<String, Car> cars = new HashMap<>();
 
-    public Car addCar(String id, Car car){
-//        id = car.getId();
-        cars.put(id, car);
+    public Optional<Car> getCar(String id){
+        return Optional.ofNullable(cars.get(id));
+    }
+
+    public Collection<Car> getCars(){
+        return Collections.unmodifiableCollection(cars.values());
+    }
+
+    public Car addCar(Car car){
+        cars.put(car.getId(), car);
         return car;
     }
 
-    public Map<String, Car> getCars(){
-        return cars;
-    }
+
 
     public List<Car> listCars(){
         return List.copyOf(cars.values());

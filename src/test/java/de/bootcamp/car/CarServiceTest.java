@@ -1,51 +1,47 @@
 package de.bootcamp.car;
 
+import org.hamcrest.MatcherAssert;
 import org.junit.jupiter.api.Test;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 import static org.assertj.core.api.AssertionsForClassTypes.assertThat;
+import static org.hamcrest.Matchers.containsInAnyOrder;
 import static org.junit.jupiter.api.Assertions.*;
 
 class CarServiceTest {
 
     @Test
-    void addCar() {
-        //GIVEN
-        Car audi = new Car(null, "audi", 4, true);
+    void shouldReturnCardId(){
 
+        Car car1 = new Car("audi", 5, true);
+        Car car2 = new Car("bmw", 4, false);
 
-// WHEN
-        CarService service = new CarService();
-        Car actual = service.addCar(audi);
+        CarRepository carRepository = new CarRepository();
+        carRepository.addCar(car1);
+        carRepository.addCar(car2);
 
-// THEN
-        assertEquals(audi, actual);
-// actual -  "Car{hersteller='audi', anzahlReifen=4, tuevPlakete=true, id=1f5d0f60-aab8-46c0-8af8-a23a4cad0d90}"
+        CarService carService = new CarService(carRepository);
+        Optional<Car> actual = carService.getCar("1234");
+        assertThat(actual).contains(car1);
 
     }
 
     @Test
-    void getCars() {
-        //GIVEN
-        Car audi = new Car("1", "audi", 4, true);
-        Car bmw = new Car("2", "bmw", 4, false);
+    void shouldReturnCars(){
+        Car car1 = new Car("audi", 5, true);
+        Car car2 = new Car("bmw", 4, false);
+        CarRepository carRepository = new CarRepository();
+        carRepository.addCar(car1);
+        carRepository.addCar(car2);
 
-        Map<String, Car> cars = new HashMap<>();
-        cars.put("id1", audi);
-        cars.put("id2", bmw);
-        System.out.println(cars);
+        CarService carService = new CarService(carRepository);
 
-        CarService service = new CarService();
-        service.addCar(audi);
-        service.addCar(audi);
+        Collection<Car> actual = carService.getCars();
 
-
-// WHEN
-        Map<String, Car> actual = service.getCars();
-
-// THEN - fail wegen dynamischen uuids
-//        assertEquals(cars, actual);
+        MatcherAssert.assertThat(actual, containsInAnyOrder(
+               List.of(new Car("audi", 5, true),
+                new Car("bmw", 4, false))));
+        assertEquals(2, actual.size());
     }
 }
