@@ -1,6 +1,8 @@
 package de.bootcamp.car;
 
 
+import java.util.Objects;
+
 public class Car {
     private String hersteller;
     private int anzahlReifen;
@@ -55,5 +57,18 @@ public class Car {
                 ", tuevPlakete=" + tuevPlakete +
                 ", id=" + id +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Car car = (Car) o;
+        return anzahlReifen == car.anzahlReifen && tuevPlakete == car.tuevPlakete && hersteller.equals(car.hersteller) && id.equals(car.id);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(hersteller, anzahlReifen, tuevPlakete, id);
     }
 }
